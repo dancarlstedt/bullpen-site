@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bullpen — Pitch counts and arm availability</title>
+  <meta name="description" content="Bullpen is a local-first pitch-count and arm-availability tracker for baseball coaches.">
+  <meta name="theme-color" content="#0e2430">
+  <link rel="canonical" href="https://dancarlstedt.github.io/bullpen-site/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bullpen — Pitch counts and arm availability">
+  <meta property="og:description" content="Know who is ready, who is limited, and who needs rest before the next inning.">
+  <meta property="og:url" content="https://dancarlstedt.github.io/bullpen-site/">
+  <meta name="twitter:card" content="summary">
+  <style>
+    :root {
+      --paper: #f4efe4;
+      --card: #fbf8f0;
+      --ink: #0e2430;
+      --muted: #66717a;
+      --clay: #d85b3f;
+      --green: #3c7a63;
+      --hairline: rgba(14, 36, 48, 0.12);
+      --shadow: 0 24px 60px rgba(14, 36, 48, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(216, 91, 63, 0.08), transparent 34rem),
+        var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: var(--clay); }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 28px 24px 80px; }
+    nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 64px; }
+    .brand { font-weight: 900; letter-spacing: -0.04em; font-size: 22px; color: var(--ink); text-decoration: none; }
+    .brand span { color: var(--clay); }
+    .nav-links { display: flex; gap: 20px; font-size: 14px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; }
+    .nav-links a:hover { color: var(--ink); }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.16em; font-size: 11px; font-weight: 800; color: var(--clay); }
+    h1 { font-size: clamp(48px, 10vw, 92px); line-height: 0.92; letter-spacing: -0.055em; margin: 12px 0 20px; }
+    h2 { font-size: clamp(26px, 4vw, 38px); line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 12px; }
+    h3 { margin: 0 0 6px; font-size: 17px; }
+    p { margin: 0 0 16px; color: var(--muted); }
+    .lede { font-size: clamp(17px, 2.5vw, 21px); max-width: 680px; color: #44525b; }
+    .hero {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 36px;
+      padding: clamp(30px, 6vw, 64px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 56px;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -160px;
+      bottom: -210px;
+      border: 2px solid rgba(244, 239, 228, 0.13);
+      border-radius: 50%;
+      box-shadow: 0 0 0 34px rgba(244, 239, 228, 0.04), 0 0 0 70px rgba(244, 239, 228, 0.025);
+    }
+    .hero .eyebrow { color: #f1a88f; }
+    .hero h1 { color: var(--paper); margin-bottom: 16px; }
+    .hero p { color: rgba(244, 239, 228, 0.72); max-width: 560px; font-size: 18px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244, 239, 228, 0.55); margin-top: 18px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); display: inline-block; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 28px 0 56px; }
+    .card { background: var(--card); border: 1px solid var(--hairline); border-radius: 24px; padding: 24px; }
+    .card p { margin-bottom: 0; font-size: 15px; }
+    .num { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; font-weight: 800; color: var(--clay); letter-spacing: 0.08em; }
+    .band { background: var(--card); border: 1px solid var(--hairline); border-radius: 28px; padding: clamp(24px, 5vw, 40px); margin: 56px 0; }
+    .band ul { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+    .band li { padding-left: 26px; position: relative; color: #44525b; }
+    .band li::before { content: ""; position: absolute; left: 0; top: 9px; width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+    .cta { display: inline-block; background: var(--clay); color: #fff; text-decoration: none; font-weight: 800; padding: 14px 24px; border-radius: 999px; margin-top: 8px; }
+    footer { border-top: 1px solid var(--hairline); padding-top: 24px; margin-top: 56px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; font-weight: 600; }
+    .legal { max-width: 760px; }
+    .legal h1 { font-size: clamp(40px, 7vw, 64px); }
+    .legal h2 { margin-top: 36px; font-size: 24px; }
+    .legal ul { color: var(--muted); }
+    .notice { background: rgba(216, 91, 63, 0.08); border: 1px solid rgba(216, 91, 63, 0.22); border-radius: 16px; padding: 16px 18px; font-size: 14px; color: #7d3a29; }
+    @media (max-width: 600px) {
+      nav { margin-bottom: 40px; }
+      .nav-links { gap: 14px; font-size: 13px; }
+      .wrap { padding: 20px 18px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="index.html">BULLPEN<span>.</span></a>
+      <div class="nav-links">
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </nav>
+
+    <main>
+    <section class="hero">
+      <div class="eyebrow">The bullpen report</div>
+      <h1>Know the arm.<br>Before the inning.</h1>
+      <p>Bullpen turns pitch counts into a live availability board, so every coach knows who is ready, who is limited, and who needs rest.</p>
+      <div class="badge"><span class="dot"></span> Ready · Limited · Resting</div>
+    </section>
+
+    <section>
+      <div class="eyebrow">Built for coaches</div>
+      <h2>One clean answer from a season of pitch counts.</h2>
+      <p class="lede">Log the work once. Bullpen handles the rest windows, weekly workload, and readiness status for every arm on your staff.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="num">01</div>
+          <h3>Today board</h3>
+          <p>See the whole staff at a glance, with a clear reason behind every availability call.</p>
+        </div>
+        <div class="card">
+          <div class="num">02</div>
+          <h3>Every pitch</h3>
+          <p>Track bullpens, live BP, games, and catch play. Add strikes, intensity, notes, and dates.</p>
+        </div>
+        <div class="card">
+          <div class="num">03</div>
+          <h3>Your rules</h3>
+          <p>Choose Aggressive, Standard, or Conservative recovery windows and set a weekly caution line.</p>
+        </div>
+        <div class="card">
+          <div class="num">04</div>
+          <h3>Private by design</h3>
+          <p>No account, no ads, no analytics, no tracking. Team data stays on the device.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="eyebrow">The workflow</div>
+      <h2>From pen to first pitch.</h2>
+      <ul>
+        <li>Open Today and see who is ready before the game plan is set.</li>
+        <li>Tap the plus button to log a session in seconds.</li>
+        <li>Review 7-day and 30-day workload on every pitcher page.</li>
+        <li>Edit or delete a session and watch availability recalculate instantly.</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="eyebrow">A note for the dugout</div>
+      <h2>Guidance, not a medical clearance.</h2>
+      <p>Bullpen is a planning tool. Recovery guidance is based on common workload practices and your team's settings. Always follow your league's pitching regulations and your athletic training staff's advice.</p>
+    </section>
+    </main>
+
+    <footer>
+      <div>© 2026 Bullpen. All rights reserved.</div>
+      <div><a href="support.html">Support</a> · <a href="privacy.html">Privacy</a></div>
+    </footer>
+  </div>
+</body>
+</html>

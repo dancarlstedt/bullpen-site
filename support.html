@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Support — Bullpen</title>
+  <meta name="description" content="Help with Bullpen, the pitch-count and arm-availability tracker for baseball coaches.">
+  <meta name="theme-color" content="#0e2430">
+  <link rel="canonical" href="https://dancarlstedt.github.io/bullpen-site/support.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Support — Bullpen">
+  <meta property="og:description" content="Answers to common questions about Bullpen, plus a support request link.">
+  <meta property="og:url" content="https://dancarlstedt.github.io/bullpen-site/support.html">
+  <style>
+    :root { --paper:#f4efe4; --card:#fbf8f0; --ink:#0e2430; --muted:#66717a; --clay:#d85b3f; --green:#3c7a63; --hairline:rgba(14,36,48,.12); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(circle at 12% 0%,rgba(216,91,63,.07),transparent 30rem),var(--paper); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.7; }
+    .wrap { max-width:860px; margin:0 auto; padding:28px 24px 80px; }
+    nav { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:56px; }
+    .brand { font-weight:900; letter-spacing:-.04em; font-size:22px; color:var(--ink); text-decoration:none; }
+    .brand span { color:var(--clay); }
+    .nav-links { display:flex; gap:20px; font-size:14px; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-weight:600; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.16em; font-size:11px; font-weight:800; color:var(--clay); }
+    h1 { font-size:clamp(42px,8vw,68px); line-height:1; letter-spacing:-.05em; margin:12px 0 14px; }
+    .lede { font-size:18px; color:#44525b; max-width:660px; }
+    h2 { font-size:24px; letter-spacing:-.02em; margin:0 0 8px; }
+    p { color:var(--muted); margin:0 0 14px; }
+    .stack { display:grid; gap:14px; margin:36px 0; }
+    .card { background:var(--card); border:1px solid var(--hairline); border-radius:22px; padding:24px; }
+    .card p:last-child { margin-bottom:0; }
+    .contact { background:var(--ink); color:var(--paper); border-radius:28px; padding:clamp(26px,5vw,40px); margin:48px 0; box-shadow:0 24px 60px rgba(14,36,48,.14); }
+    .contact h2 { color:var(--paper); }
+    .contact p { color:rgba(244,239,228,.7); }
+    .contact a { color:#f1a88f; }
+    .button { display:inline-block; background:var(--clay); color:#fff !important; text-decoration:none; font-weight:800; padding:13px 22px; border-radius:999px; margin-top:8px; }
+    .button:hover { background:#c84d33; }
+    .pill { display:inline-block; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--green); background:rgba(60,122,99,.1); border-radius:999px; padding:5px 10px; margin-bottom:14px; }
+    a { color:var(--clay); }
+    footer { border-top:1px solid var(--hairline); padding-top:24px; margin-top:56px; display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; font-size:13px; color:var(--muted); }
+    footer a { color:var(--muted); text-decoration:none; font-weight:600; }
+    .notice { background:rgba(216,91,63,.08); border:1px solid rgba(216,91,63,.22); border-radius:16px; padding:16px 18px; font-size:14px; color:#7d3a29; }
+    @media (max-width:600px) { .wrap { padding:20px 18px 60px; } nav { margin-bottom:36px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="index.html">BULLPEN<span>.</span></a>
+      <div class="nav-links">
+        <a href="support.html" aria-current="page">Support</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </nav>
+
+    <main>
+    <div class="eyebrow">Support</div>
+    <h1>Need a hand?</h1>
+    <p class="lede">Bullpen is local, private, and designed to stay out of the way in the dugout. Here are the answers coaches ask for most.</p>
+
+    <div class="stack">
+      <div class="card">
+        <div class="pill">Availability</div>
+        <h2>How is readiness calculated?</h2>
+        <p>Bullpen combines the pitcher's most recent session with the team recovery model. <strong>Aggressive</strong> shortens the rest window by one day when the pitcher threw more than 20 pitches. <strong>Standard</strong> uses the baseline rest table. <strong>Conservative</strong> adds a day for outings over 15 pitches.</p>
+        <p><strong>Ready</strong> means the rest window is complete and the seven-day total is below the team caution line. <strong>Limited</strong> means the pitcher already threw today or has reached the caution line. <strong>Resting</strong> means a rest window is still active; the earliest return date is shown on the pitcher page.</p>
+      </div>
+
+      <div class="card">
+        <div class="pill">Sessions</div>
+        <h2>Can I edit or delete a session?</h2>
+        <p>Yes. Open <strong>Sessions</strong>, tap any entry, change the details, and save. The editor also has a delete action. Availability and workload recalculate immediately.</p>
+      </div>
+
+      <div class="card">
+        <div class="pill">Roster</div>
+        <h2>How do I remove a pitcher?</h2>
+        <p>Open <strong>Roster</strong>, tap the pitcher, then use the ellipsis menu and choose <strong>Remove pitcher</strong>. Deleting a pitcher also deletes their session history. If you want to keep the history, edit the pitcher and turn off <strong>Active roster</strong> instead.</p>
+      </div>
+
+      <div class="card">
+        <div class="pill">Data</div>
+        <h2>How do I start over?</h2>
+        <p>Open <strong>Team → Data → Delete all data</strong>. You can also restore the Riverside Rams sample team from the same section. Uninstalling the app removes all local data.</p>
+      </div>
+
+      <div class="card">
+        <div class="pill">Privacy</div>
+        <h2>Does Bullpen sync between devices?</h2>
+        <p>No. Bullpen stores everything only on the device where it was entered. There is no account, cloud sync, analytics, or tracking. See the <a href="privacy.html">privacy policy</a> for details.</p>
+      </div>
+    </div>
+
+    <div class="contact">
+      <div class="eyebrow">Still stuck?</div>
+      <h2>Open a support request.</h2>
+      <p>Include your iPhone model, iOS version, and a short description of what happened. Screenshots are welcome, but please do not include private player information. Support requests are public, so use a subject line that does not identify a player.</p>
+      <a class="button" href="https://github.com/dancarlstedt/bullpen-site/issues/new?template=support.yml" rel="noopener">Open a support request</a>
+      <p style="margin-top:16px;font-size:13px;">Requests are reviewed on a best-effort basis.</p>
+    </div>
+    </main>
+
+    <footer>
+      <div>© 2026 Bullpen. All rights reserved.</div>
+      <div><a href="support.html">Support</a> · <a href="privacy.html">Privacy</a></div>
+    </footer>
+  </div>
+</body>
+</html>
